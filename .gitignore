@@ -1,5 +1,4 @@
-audio/horn.mp3
-audio/turn-signal.mp3
+audio/*.mp3
 examples
 img/info.icns
 
