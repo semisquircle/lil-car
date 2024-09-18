@@ -5,3 +5,5 @@ img/info.icns
 *.txt
 *.kra
 svg2js.py
+
+.DS_Store
