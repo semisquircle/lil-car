@@ -1,0 +1,175 @@
+:root {
+	--light-off: #111111;
+	--light-green: #07e5b2;
+	--light-yellow: rgb(255, 208, 0);
+	--light-red: rgb(255, 38, 0);
+	--light-white: white;
+
+	--width: 310px;
+	--height: 290px;
+
+	--in1: 58px;
+	--in2: 84px;
+	--in3: 110px;
+	--in4: 134px;
+
+	--row1-offset: 20px;
+	--row1-down1: var(--row1-offset);
+	--row1-down2: calc(var(--row1-offset) + 2px);
+	--row1-down3: calc(var(--row1-offset) + 5px);
+	--row1-down4: calc(var(--row1-offset) + 10px);
+
+	--row2-offset: 25px;
+	--row2-down1: calc(var(--row1-down1) + var(--row2-offset));
+	--row2-down2: calc(var(--row1-down2) + var(--row2-offset));
+	--row2-down3: calc(var(--row1-down3) + var(--row2-offset));
+	--row2-down4: calc(var(--row1-down4) + var(--row2-offset));
+}
+
+body {margin: 0;}
+
+* {user-select: none;}
+
+img {
+	position: absolute;
+	image-rendering: pixelated;
+}
+
+input[type="checkbox"] {display: none;}
+
+.light {
+	--dimension: 17px;
+	--color: var(--light-off);
+	position: absolute;
+	width: var(--dimension);
+	height: var(--dimension);
+	cursor: pointer;
+}
+.light svg {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+.light path {fill: var(--color) !important;}
+input:checked + .light svg,
+.cycle svg:not(:nth-child(1))
+{filter: drop-shadow(0 0 5px var(--color));}
+
+
+
+/* Turn signals */
+.turn-signal {
+	--dimension: 20px;
+	position: absolute;
+	top: 49px;
+}
+.turn-signal[data-blinking="true"] {
+	--color: var(--light-green);
+	animation: blinking 0.68416099773s infinite;
+}
+
+@keyframes blinking {
+	0% {--color: var(--light-off);}
+	50% {
+		--color: var(--light-green);
+		filter: drop-shadow(0 0 5px var(--color));
+	}
+	100% {--color: var(--light-off);}
+}
+
+#turn-signal-left {left: 25px;}
+#turn-signal-right {left: calc(var(--width) - var(--dimension) - 25px);}
+
+
+/* Row 1 */
+label[for="engine"] {top: var(--row1-down4); left: var(--in1);}
+input:checked + label[for="engine"] {--color: var(--light-yellow);}
+
+label[for="battery"] {top: var(--row1-down3); left: var(--in2);}
+input:checked + label[for="battery"] {--color: var(--light-red);}
+
+label[for="brake-warning"] {top: var(--row1-down2); left: var(--in3);}
+input:checked + label[for="brake-warning"] {--color: var(--light-red);}
+
+label[for="oil-pressure"] {top: var(--row1-down1); left: var(--in4);}
+input:checked + label[for="oil-pressure"] {--color: var(--light-red);}
+
+label[for="door-ajar"] {top: var(--row1-down1); left: calc(var(--width) - var(--dimension) - var(--in4));}
+input:checked + label[for="door-ajar"] {--color: var(--light-red);}
+
+label[for="tire-warning"] {top: var(--row1-down2); left: calc(var(--width) - var(--dimension) - var(--in3));}
+input:checked + label[for="tire-warning"] {--color: var(--light-yellow);}
+
+label[for="traction-control"] {top: var(--row1-down3); left: calc(var(--width) - var(--dimension) - var(--in2));}
+input:checked + label[for="traction-control"] {--color: var(--light-yellow);}
+
+label[for="seatbelt"] {top: var(--row1-down4); left: calc(var(--width) - var(--dimension) - var(--in1));}
+input:checked + label[for="seatbelt"] {--color: var(--light-red);}
+
+
+
+/* Row 2 */
+#headlights {
+	--color: var(--light-white);
+	top: var(--row2-down4); left: var(--in1);
+}
+#headlights svg {opacity: 0;}
+#headlights svg:nth-child(1) {
+	--color: var(--light-off);
+	opacity: 1;
+}
+
+label[for="windshield"] {top: var(--row2-down3); left: var(--in2);}
+input:checked + label[for="windshield"] {--color: var(--light-yellow);}
+
+label[for="defrost-front"] {top: var(--row2-down2); left: var(--in3);}
+input:checked + label[for="defrost-front"] {--color: var(--light-yellow);}
+
+label[for="defrost-rear"] {top: var(--row2-down1); left: var(--in4);}
+input:checked + label[for="defrost-rear"] {--color: var(--light-yellow);}
+
+label[for="diesel-glow-plug"] {top: var(--row2-down1); left: calc(var(--width) - var(--dimension) - var(--in4));}
+input:checked + label[for="diesel-glow-plug"] {--color: var(--light-yellow);}
+
+label[for="gas"] {top: var(--row2-down2); left: calc(var(--width) - var(--dimension) - var(--in3));}
+input:checked + label[for="gas"] {--color: var(--light-yellow);}
+
+label[for="key"] {top: var(--row2-down3); left: calc(var(--width) - var(--dimension) - var(--in2));}
+input:checked + label[for="key"] {--color: var(--light-yellow);}
+
+#ac {
+	--color: var(--light-white);
+	top: var(--row2-down4); left: calc(var(--width) - var(--dimension) - var(--in1));
+}
+#ac svg {opacity: 0;}
+#ac svg:nth-child(1) {
+	--color: var(--light-off);
+	opacity: 1;
+}
+
+
+
+/* Wheel */
+#wheel {
+	position: absolute;
+	top: 74.810px;
+	left: 54.996px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 200px;
+	height: 200px;
+	border-radius: 50%;
+	cursor: pointer;
+	transition: transform 0s linear;
+}
+#wheel img {
+	height: 100%;
+	pointer-events: none;
+}
+.horn {
+	position: absolute;
+	width: 90px;
+	height: 90px;
+	border-radius: 50%;
+}

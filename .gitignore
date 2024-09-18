@@ -1,0 +1,8 @@
+audio/horn.mp3
+audio/turn-signal.mp3
+examples
+img/info.icns
+
+*.txt
+*.kra
+svg2js.py
