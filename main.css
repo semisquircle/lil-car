@@ -1,175 +1,255 @@
-:root {
-	--light-off: #111111;
-	--light-green: #07e5b2;
-	--light-yellow: rgb(255, 208, 0);
-	--light-red: rgb(255, 38, 0);
-	--light-white: white;
-
-	--width: 310px;
-	--height: 290px;
-
-	--in1: 58px;
-	--in2: 84px;
-	--in3: 110px;
-	--in4: 134px;
-
-	--row1-offset: 20px;
-	--row1-down1: var(--row1-offset);
-	--row1-down2: calc(var(--row1-offset) + 2px);
-	--row1-down3: calc(var(--row1-offset) + 5px);
-	--row1-down4: calc(var(--row1-offset) + 10px);
-
-	--row2-offset: 25px;
-	--row2-down1: calc(var(--row1-down1) + var(--row2-offset));
-	--row2-down2: calc(var(--row1-down2) + var(--row2-offset));
-	--row2-down3: calc(var(--row1-down3) + var(--row2-offset));
-	--row2-down4: calc(var(--row1-down4) + var(--row2-offset));
+body {
+  margin: 0;
 }
 
-body {margin: 0;}
-
-* {user-select: none;}
+* {
+  user-select: none;
+}
 
 img {
-	position: absolute;
-	image-rendering: pixelated;
+  position: absolute;
 }
 
-input[type="checkbox"] {display: none;}
+#front, #back {
+  position: absolute;
+  width: 310px;
+  height: 280px;
+}
+
+/* Front */
+.light, .light img {
+  width: 17px;
+  height: 17px;
+}
 
 .light {
-	--dimension: 17px;
-	--color: var(--light-off);
-	position: absolute;
-	width: var(--dimension);
-	height: var(--dimension);
-	cursor: pointer;
+  position: absolute;
+  cursor: pointer;
 }
-.light svg {
-	position: absolute;
-	width: 100%;
-	height: 100%;
+
+.light .light-img-off {
+  visibility: visible;
 }
-.light path {fill: var(--color) !important;}
-input:checked + .light svg,
-.cycle svg:not(:nth-child(1))
-{filter: drop-shadow(0 0 5px var(--color));}
 
+.light .light-img-on {
+  visibility: hidden;
+}
 
+.light-on .light-img-off {
+  visibility: hidden;
+}
+
+.light-on .light-img-on {
+  visibility: visible;
+}
 
 /* Turn signals */
+.turn-signal, .turn-signal img {
+  width: 22px;
+  height: 22px;
+}
+
 .turn-signal {
-	--dimension: 20px;
-	position: absolute;
-	top: 49px;
-}
-.turn-signal[data-blinking="true"] {
-	--color: var(--light-green);
-	animation: blinking 0.68416099773s infinite;
+  position: absolute;
+  top: 47px;
 }
 
-@keyframes blinking {
-	0% {--color: var(--light-off);}
-	50% {
-		--color: var(--light-green);
-		filter: drop-shadow(0 0 5px var(--color));
-	}
-	100% {--color: var(--light-off);}
+#turn-signal-left {
+  left: 25px;
 }
 
-#turn-signal-left {left: 25px;}
-#turn-signal-right {left: calc(var(--width) - var(--dimension) - 25px);}
-
+#turn-signal-right {
+  left: 263px;
+}
 
 /* Row 1 */
-label[for="engine"] {top: var(--row1-down4); left: var(--in1);}
-input:checked + label[for="engine"] {--color: var(--light-yellow);}
+#engine {
+  top: 30px;
+  left: 58px;
+}
 
-label[for="battery"] {top: var(--row1-down3); left: var(--in2);}
-input:checked + label[for="battery"] {--color: var(--light-red);}
+#battery {
+  top: 25px;
+  left: 84px;
+}
 
-label[for="brake-warning"] {top: var(--row1-down2); left: var(--in3);}
-input:checked + label[for="brake-warning"] {--color: var(--light-red);}
+#brake-warning {
+  top: 22px;
+  left: 110px;
+}
 
-label[for="oil-pressure"] {top: var(--row1-down1); left: var(--in4);}
-input:checked + label[for="oil-pressure"] {--color: var(--light-red);}
+#oil-pressure {
+  top: 20px;
+  left: 134px;
+}
 
-label[for="door-ajar"] {top: var(--row1-down1); left: calc(var(--width) - var(--dimension) - var(--in4));}
-input:checked + label[for="door-ajar"] {--color: var(--light-red);}
+#door-ajar {
+  top: 20px;
+  left: 159px;
+}
 
-label[for="tire-warning"] {top: var(--row1-down2); left: calc(var(--width) - var(--dimension) - var(--in3));}
-input:checked + label[for="tire-warning"] {--color: var(--light-yellow);}
+#tire-warning {
+  top: 22px;
+  left: 183px;
+}
 
-label[for="traction-control"] {top: var(--row1-down3); left: calc(var(--width) - var(--dimension) - var(--in2));}
-input:checked + label[for="traction-control"] {--color: var(--light-yellow);}
+#traction-control {
+  top: 25px;
+  left: 209px;
+}
 
-label[for="seatbelt"] {top: var(--row1-down4); left: calc(var(--width) - var(--dimension) - var(--in1));}
-input:checked + label[for="seatbelt"] {--color: var(--light-red);}
-
-
+#seatbelt {
+  top: 30px;
+  left: 235px;
+}
 
 /* Row 2 */
 #headlights {
-	--color: var(--light-white);
-	top: var(--row2-down4); left: var(--in1);
-}
-#headlights svg {opacity: 0;}
-#headlights svg:nth-child(1) {
-	--color: var(--light-off);
-	opacity: 1;
+  top: 55px;
+  left: 58px;
 }
 
-label[for="windshield"] {top: var(--row2-down3); left: var(--in2);}
-input:checked + label[for="windshield"] {--color: var(--light-yellow);}
+#headlights img {
+  visibility: hidden;
+}
 
-label[for="defrost-front"] {top: var(--row2-down2); left: var(--in3);}
-input:checked + label[for="defrost-front"] {--color: var(--light-yellow);}
+#headlights .cycle-current {
+  visibility: visible;
+}
 
-label[for="defrost-rear"] {top: var(--row2-down1); left: var(--in4);}
-input:checked + label[for="defrost-rear"] {--color: var(--light-yellow);}
+#windshield {
+  top: 50px;
+  left: 84px;
+}
 
-label[for="diesel-glow-plug"] {top: var(--row2-down1); left: calc(var(--width) - var(--dimension) - var(--in4));}
-input:checked + label[for="diesel-glow-plug"] {--color: var(--light-yellow);}
+#defrost-front {
+  top: 47px;
+  left: 110px;
+}
 
-label[for="gas"] {top: var(--row2-down2); left: calc(var(--width) - var(--dimension) - var(--in3));}
-input:checked + label[for="gas"] {--color: var(--light-yellow);}
+#defrost-rear {
+  top: 45px;
+  left: 134px;
+}
 
-label[for="key"] {top: var(--row2-down3); left: calc(var(--width) - var(--dimension) - var(--in2));}
-input:checked + label[for="key"] {--color: var(--light-yellow);}
+#diesel-glow-plug {
+  top: 45px;
+  left: 159px;
+}
+
+#gas {
+  top: 47px;
+  left: 183px;
+}
+
+#key {
+  top: 50px;
+  left: 209px;
+}
 
 #ac {
-	--color: var(--light-white);
-	top: var(--row2-down4); left: calc(var(--width) - var(--dimension) - var(--in1));
-}
-#ac svg {opacity: 0;}
-#ac svg:nth-child(1) {
-	--color: var(--light-off);
-	opacity: 1;
+  top: 55px;
+  left: 235px;
 }
 
+#ac img {
+  visibility: hidden;
+}
 
+#ac .cycle-current {
+  visibility: visible;
+}
+
+/* Buttons */
+.btn, .btn img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 310px;
+  height: 280px;
+}
+
+.btn-img-unpressed {
+  visibility: visible;
+}
+
+.btn-img-pressed {
+  visibility: hidden;
+}
+
+.btn-pressed .btn-img-unpressed {
+  visibility: hidden;
+}
+
+.btn-pressed .btn-img-pressed {
+  visibility: visible;
+}
+
+.btn-handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#lock-handle {
+  top: 93px;
+  left: 22px;
+  width: 25px;
+  height: 27px;
+}
+
+#unlock-handle {
+  top: 87px;
+  left: 45px;
+  width: 25px;
+  height: 27px;
+}
+
+#hazard-lights-handle {
+  top: 89px;
+  left: 240px;
+  width: 48px;
+  height: 28px;
+}
 
 /* Wheel */
 #wheel {
-	position: absolute;
-	top: 74.810px;
-	left: 54.996px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 200px;
-	height: 200px;
-	border-radius: 50%;
-	cursor: pointer;
-	transition: transform 0s linear;
+  position: absolute;
+  top: 74.81px;
+  left: 54.996px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
 }
-#wheel img {
-	height: 100%;
-	pointer-events: none;
+
+.wheel-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
-.horn {
-	position: absolute;
-	width: 90px;
-	height: 90px;
-	border-radius: 50%;
+
+.wheel-active {
+  visibility: visible;
+}
+
+#horn {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Back */
+#back {
+  display: none;
 }

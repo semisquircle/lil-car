@@ -1,9 +1,5 @@
-audio/*.mp3
-examples
-img/info.icns
-
-*.txt
-*.kra
-svg2js.py
-
 .DS_Store
+
+.jekyll-cache
+.jekyll-metadata
+vendor
