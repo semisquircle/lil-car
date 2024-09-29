@@ -1,43 +1,45 @@
-String.prototype.mySplit = function(separator, limit) {
+String.prototype.customSplit = function(separator) {
+	if (typeof separator !== 'string') {
+		throw new TypeError('Separator must be a string');
+	}
+
 	var result = [];
-	var string = this;
-	var startIndex = 0;
-	var endIndex;
+	var currentSegment = '';
+	var separatorLength = separator.length;
+	var str = this;
+	var strLength = str.length;
 
-	if (separator === '') {
-		for (var i = 0; i < string.length; i++) {
-			result.push(string.charAt(i));
-		}
-		return result;
+	if (separatorLength === 0) {
+		throw new Error('Separator cannot be an empty string');
 	}
 
-	if (separator === undefined) {
-		result.push(string);
-		return result;
-	}
-
-	while (true) {
-		endIndex = -1;
-		for (var i = startIndex; i < string.length; i++) {
-			if (string.charAt(i) === separator) {
-				endIndex = i;
-				break;
+	for (var i = 0; i < strLength; i++) {
+		if (str[i] === separator[0]) {
+			var match = true;
+			for (var j = 1; j < separatorLength; j++) {
+				if (str[i + j] !== separator[j]) {
+					match = false;
+					break;
+				}
 			}
-		}
-
-		if (endIndex === -1) {
-			break;
-		}
-
-		result.push(string.substring(startIndex, endIndex));
-		startIndex = endIndex + 1;
-
-		if (limit !== undefined && result.length === limit) {
-			break;
+			if (match) {
+				result.push(currentSegment);
+				currentSegment = '';
+				i += separatorLength - 1;
+			} else {
+				currentSegment += str[i];
+			}
+		} else {
+			currentSegment += str[i];
 		}
 	}
 
-	result.push(string.substring(startIndex));
+	result.push(currentSegment);
+
+	if (result.length === 1 && result[0] === str) {
+		return [str];
+	}
+
 	return result;
 }
 
@@ -47,7 +49,7 @@ function getElementsByClass(context, className) {
 	var result = [];
 
 	for (var i = 0; i < elements.length; i++) {
-		var classes = elements[i].className.mySplit(' ');
+		var classes = elements[i].className.customSplit(' ');
 		for (var j = 0; j < classes.length; j++) {
 			if (classes[j] === className) {
 				result.push(elements[i]);
@@ -61,7 +63,7 @@ function getElementsByClass(context, className) {
 
 function addClass(el, cls) {
 	var filteredClassArray = [];
-	var classArray = el.className.mySplit(' ');
+	var classArray = el.className.customSplit(' ');
 	for (var i = 0; i < classArray.length; i++) {
 		if (classArray[i] !== '') filteredClassArray.push(classArray[i]);
 	}
@@ -71,7 +73,7 @@ function addClass(el, cls) {
 
 function removeClass(el, cls) {
 	var filteredClassArray = [];
-	var classArray = el.className.mySplit(' ');
+	var classArray = el.className.customSplit(' ');
 	for (var i = 0; i < classArray.length; i++) {
 		if (classArray[i] !== '' && classArray[i] !== cls) filteredClassArray.push(classArray[i]);
 	}
@@ -80,7 +82,7 @@ function removeClass(el, cls) {
 
 function hasClass(el, cls) {
 	var filteredClassArray = [];
-	var classArray = el.className.mySplit(' ');
+	var classArray = el.className.customSplit(' ');
 	for (var i = 0; i < classArray.length; i++) {
 		if (classArray[i] !== '') filteredClassArray.push(classArray[i]);
 	}
@@ -95,29 +97,59 @@ function hasClass(el, cls) {
 
 
 // Light events
-/* var turnSignalAudio = new Audio('audio/turn-signal.wav');
-	turnSignalAudio.loop = true;
-	turnSignalAudio.preload = 'auto';
-var isTurnSignalAudioPlaying = false;
-var hornAudio = new Audio('audio/horn.wav');
-	hornAudio.preload = 'auto';
-var currentTurnSignal = ''; */
+var turnSignalTimers = {'left': null, 'right': null}
+var turnSignalDuration = 365.71428571;
+var currentTurnSignal = '';
+
+function turnSignalAnimation(turnSignal) {
+	if (hasClass(turnSignal, 'light-on')) removeClass(turnSignal, 'light-on');
+	else addClass(turnSignal, 'light-on');
+}
+
+function turnSignalOn(turnSignal) {
+	addClass(turnSignal, 'turn-signal-on');
+	addClass(turnSignal, 'light-on');
+}
+
+function turnSignalOff(turnSignal) {
+	removeClass(turnSignal, 'turn-signal-on');
+	removeClass(turnSignal, 'light-on');
+}
+
+function turnAllTurnSignalsOn() {
+	var turnSignalLeft = document.getElementById('turn-signal-left');
+	var turnSignalRight = document.getElementById('turn-signal-right');
+	turnSignalOn(turnSignalLeft);
+	turnSignalOn(turnSignalRight);
+	turnSignalTimers['left'] = setInterval(turnSignalAnimation, turnSignalDuration, turnSignalLeft);
+	turnSignalTimers['right'] = setInterval(turnSignalAnimation, turnSignalDuration, turnSignalRight);
+}
+
+function turnAllTurnSignalsOff() {
+	var turnSignalLeft = document.getElementById('turn-signal-left');
+	var turnSignalRight = document.getElementById('turn-signal-right');
+	turnSignalOff(turnSignalLeft);
+	turnSignalOff(turnSignalRight);
+	clearInterval(turnSignalTimers['left']);
+	clearInterval(turnSignalTimers['right']);
+}
 
 function turnSignalClick(turnSignal) {
-	/* var direction = turnSignal.id.replace('turn-signal-', '');
+	var direction = turnSignal.id.replace('turn-signal-', '');
+	var hazardLightsBtn = document.getElementById('hazard-lights-btn');
+	removeClass(hazardLightsBtn, 'btn-pressed');
 
-	if (currentTurnSignal == '') {
-		currentTurnSignal = direction;
-		isTurnSignalAudioPlaying = true;
-		turnSignalAudio.play();
-	} else if (currentTurnSignal == direction) {
+	if (currentTurnSignal == direction) {
 		currentTurnSignal = '';
-		isTurnSignalAudioPlaying = false;
-		turnSignalAudio.pause();
-		turnSignalAudio.currentTime = 0;
+		turnAllTurnSignalsOff();
+		stopTurnSignalAudio();
 	} else {
 		currentTurnSignal = direction;
-	} */
+		turnAllTurnSignalsOff();
+		turnSignalOn(turnSignal);
+		turnSignalTimers[direction] = setInterval(turnSignalAnimation, turnSignalDuration, turnSignal);
+		playTurnSignalAudio();
+	}
 }
 
 function lightClick(light) {
@@ -126,21 +158,21 @@ function lightClick(light) {
 }
 
 var headlightsIndex = 0;
-var headlights = document.getElementById('headlights');
-var headlightsLights = getElementsByClass(headlights, 'headlights-light');
 function headlightsClick() {
-	headlightsIndex = (headlightsIndex + 1) % 4;
+	var headlights = document.getElementById('headlights');
+	var headlightsLights = getElementsByClass(headlights, 'headlights-light');
 	var cycleCurrent = getElementsByClass(headlights, 'cycle-current')[0];
+	headlightsIndex = (headlightsIndex + 1) % 4;
 	removeClass(cycleCurrent, 'cycle-current');
 	addClass(headlightsLights[headlightsIndex], 'cycle-current');
 }
 
 var acIndex = 0;
-var ac = document.getElementById('ac');
-var acLights = getElementsByClass(ac, 'ac-light');
 function acClick() {
-	acIndex = (acIndex + 1) % 4;
+	var ac = document.getElementById('ac');
+	var acLights = getElementsByClass(ac, 'ac-light');
 	var cycleCurrent = getElementsByClass(ac, 'cycle-current')[0];
+	acIndex = (acIndex + 1) % 4;
 	removeClass(cycleCurrent, 'cycle-current');
 	addClass(acLights[acIndex], 'cycle-current');
 }
@@ -149,51 +181,48 @@ function acClick() {
 
 // Buttons
 var locked = false;
-var lockBtn = document.getElementById('lock-btn');
-var unlockBtn = document.getElementById('unlock-btn');
-var hazardLightBtn = document.getElementById('hazard-lights-btn');
-
 function lockClick() {
 	if (!locked) {
+		var lockBtn = document.getElementById('lock-btn');
+		var unlockBtn = document.getElementById('unlock-btn');
 		locked = true;
 		addClass(lockBtn, 'btn-pressed');
 		removeClass(unlockBtn, 'btn-pressed');
+		playLockAudio();
 	}
 }
-
 function unlockClick() {
 	if (locked) {
+		var lockBtn = document.getElementById('lock-btn');
+		var unlockBtn = document.getElementById('unlock-btn');
 		locked = false;
 		removeClass(lockBtn, 'btn-pressed');
 		addClass(unlockBtn, 'btn-pressed');
 	}
 }
 
-function hazardLightClick() {
-	if (hasClass(hazardLightBtn, 'btn-pressed')) {
-		/* currentTurnSignal = '';
-		isTurnSignalAudioPlaying = false;
-		turnSignalAudio.pause();
-		turnSignalAudio.currentTime = 0; */
-		removeClass(hazardLightBtn, 'btn-pressed');
+function hazardLightsClick() {
+	var hazardLightsBtn = document.getElementById('hazard-lights-btn');
+	turnAllTurnSignalsOff();
+	
+	if (currentTurnSignal == 'both') {
+		currentTurnSignal = '';
+		removeClass(hazardLightsBtn, 'btn-pressed');
+		stopTurnSignalAudio();
 	} else {
-		/* currentTurnSignal = 'both';
-		isTurnSignalAudioPlaying = true;
-		turnSignalAudio.play(); */
-		addClass(hazardLightBtn, 'btn-pressed');
+		currentTurnSignal = 'both';
+		addClass(hazardLightsBtn, 'btn-pressed');
+		turnAllTurnSignalsOn();
+		playTurnSignalAudio();
 	}
 }
 
 
 
 // Wheel
-var wheel = document.getElementById('wheel');
-var wheelCenterX = wheel.offsetLeft + wheel.offsetWidth / 2;
-var wheelCenterY = wheel.offsetTop + wheel.offsetHeight / 2;
-
 var WheelDrag = {
 	isDragging: false,
-	angleDelta: 10,
+	angleDelta: 20,
 	restingAngle: 0,
 	mouseDownAngle: 0,
 	mouseMoveAngle: 0,
@@ -201,16 +230,25 @@ var WheelDrag = {
 }
 
 function getAngle(x, y) {
+	var wheel = document.getElementById('wheel');
+	var wheelCenterX = wheel.offsetLeft + wheel.offsetWidth / 2;
+	var wheelCenterY = wheel.offsetTop + wheel.offsetHeight / 2;
 	return Math.atan2(y - wheelCenterX, x - wheelCenterY);
 }
 
-function wheelMouseDown(e) {
+function wheelMouseDown(event) {
+	event.stopPropagation();
+	event.preventDefault();
+
 	WheelDrag.isDragging = true;
-	WheelDrag.mouseDownAngle = getAngle(e.clientX, e.clientY);
+	WheelDrag.mouseDownAngle = getAngle(event.clientX, event.clientY);
 }
-function wheelMouseMove(e) {
-	if (WheelDrag.isDragging) {	
-		WheelDrag.mouseMoveAngle = getAngle(e.clientX, e.clientY);
+function wheelMouseMove(event) {
+	if (WheelDrag.isDragging) {
+		event.stopPropagation();
+		event.preventDefault();
+
+		WheelDrag.mouseMoveAngle = getAngle(event.clientX, event.clientY);
 		WheelDrag.mouseUpAngle = WheelDrag.restingAngle - (WheelDrag.mouseMoveAngle - WheelDrag.mouseDownAngle);
 		var angleChangeDeg = WheelDrag.mouseUpAngle * (180 / Math.PI);
 
@@ -227,11 +265,19 @@ function wheelMouseMove(e) {
 	}
 }
 function wheelMouseUp() {
-	WheelDrag.isDragging = false;
-	WheelDrag.restingAngle = WheelDrag.mouseUpAngle;
+	if (WheelDrag.isDragging) {
+		WheelDrag.isDragging = false;
+		WheelDrag.restingAngle = WheelDrag.mouseUpAngle;
+	}
 }
 
-function hornMouseDown(e) {
-	e.stopPropagation();
-	// hornAudio.play();
+function hornClick(event) {
+	event.stopPropagation();
+	event.preventDefault();
+	playHornAudio();
+}
+
+var currentHorn = 'honda-accord';
+function hornChange(hornSelect) {
+	currentHorn = hornSelect.value;
 }
