@@ -2,3 +2,7 @@
 .jekyll-cache
 .jekyll-metadata
 vendor
+
+examples
+python
+src

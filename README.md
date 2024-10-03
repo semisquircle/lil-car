@@ -6,10 +6,10 @@ This is a general repository for the widget featured in my [YouTube video](https
 To maximize compatibility, two versions are available:
 - *Standard Edition*
 	- No sound effects
-	- HTML 4.01, minified scripts
+	- HTML 4.01, ECMAScript 3
 	- Optimized for Mac OS X 10.4 Tiger – 10.6 Snow Leopard
-- *Collector's Edition*
-	- 1.5x resolution images
+- *Deluxe Edition*
+	- Embedded sound effects
 	- HTML 5, ECMAScript 5
 	- Optimized for Mac OS X 10.7 Lion – macOS 10.14 Mojave
 
@@ -28,4 +28,4 @@ Shared directories/guest additions is generally unsupported for Mac versions <10
 5. Navigate to the VM's main hard disk and copy the widget wherever you like!
 
 ## Note
-Keep in mind the Standard edition was written to be completely backwards-compatibile with the Safari 2.0 WebKit engine from 2005. That means no native audio support, no CSS3, and bare-bones JS helper methods. For future developers, I would recommend starting with a program like Dashcode on OS X 10.7 rather than dissecting this project for example code.
+Keep in mind the Standard edition was written to be completely backwards compatibile with the Safari 2.0 WebKit engine from 2005. That means no native audio support, no CSS3, and bare-bones JS helper methods. For future developers, I would recommend starting with a program like Dashcode on OS X 10.7.
