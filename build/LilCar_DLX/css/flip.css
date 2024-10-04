@@ -1,0 +1,74 @@
+#front, #back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 310px;
+  height: 280px;
+}
+
+#front-bg, #back-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Front */
+#front {
+  display: block;
+}
+
+#flip-btn {
+  position: absolute;
+  top: 187px;
+  left: 263px;
+  width: 13px;
+  height: 13px;
+}
+
+#flip-btn-i, #flip-btn-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#flip-btn-i {
+  opacity: 0;
+}
+
+#flip-btn-bg {
+  display: none;
+  opacity: 0.25;
+}
+
+/* Back */
+#back {
+  display: none;
+}
+
+#done-btn {
+  position: absolute;
+  top: 176px;
+  left: 225px;
+}
+
+#done-btn-unpressed, #done-btn-pressed {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#done-btn-unpressed {
+  opacity: 1;
+}
+
+#done-btn-pressed {
+  opacity: 0;
+}
+
+.done-btn-pressed #done-btn-unpressed {
+  opacity: 0;
+}
+
+.done-btn-pressed #done-btn-pressed {
+  opacity: 1;
+}

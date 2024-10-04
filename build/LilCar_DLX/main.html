@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 
 <head>
@@ -12,33 +12,40 @@
 	<script type="text/javascript" src="js/flip.js"></script>
 	<script type="text/javascript">
 		// Turn signals
-		var turnSignalAudio = new Audio("audio/turn-signal.mp3");
 		function playTurnSignalAudio() {
-			turnSignalAudio.currentTime = 0;
-			turnSignalAudio.loop = true;
-			turnSignalAudio.play();
+			var turnSignalAudio = document.getElementById('turn-signal-audio');
+			var turnSignalEmbed = document.getElementById('turn-signal-embed');
+			if (turnSignalEmbed) turnSignalAudio.removeChild(turnSignalEmbed);
+			turnSignalAudio.innerHTML = '<embed id="turn-signal-embed" src="audio/turn-signal.mp3" autostart="true" loop="true" hidden="true">';
 		}
 		function stopTurnSignalAudio() {
-			turnSignalAudio.pause();
+			var turnSignalAudio = document.getElementById('turn-signal-audio');
+			var turnSignalEmbed = document.getElementById('turn-signal-embed');
+			turnSignalAudio.removeChild(turnSignalEmbed);
 		}
 
 		// Lock
-		var lockAudio = new Audio("audio/lock.mp3");
 		function playLockAudio() {
-			lockAudio.currentTime = 0;
-			lockAudio.play();
+			var lockAudio = document.getElementById('lock-audio');
+			var lockEmbed = document.getElementById('lock-embed');
+			if (lockEmbed) lockAudio.removeChild(lockEmbed);
+			lockAudio.innerHTML = '<embed id="lock-embed" src="audio/lock.mp3" autostart="true" hidden="true">';
 		}
 
 		// Horn
 		function playHornAudio() {
-			var hornAudio = new Audio("audio/" + currentHorn + ".mp3");
-			hornAudio.currentTime = 0;
-			hornAudio.play();
+			var hornAudio = document.getElementById('horn-audio');
+			var hornEmbed = document.getElementById('horn-embed');
+			if (hornEmbed) hornAudio.removeChild(hornEmbed);
+			hornAudio.innerHTML = '<embed id="horn-embed" src="audio/' + currentHorn + '.mp3" autostart="true" hidden="true">';
 		}
 	</script>
 </head>
 
 <body>
+	<div class="audio" id="turn-signal-audio"></div>
+	<div class="audio" id="lock-audio"></div>
+	<div class="audio" id="horn-audio"></div>
 	
 	<div id="front" onmousemove="showFlipI(); wheelMouseMove(event);" onmouseup="wheelMouseUp()" onmouseout="hideFlipI()" onmouseleave="wheelMouseUp()">
 		<img id="front-bg" src="img/png/front.png">

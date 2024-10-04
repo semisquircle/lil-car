@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html>
 
 <head>
@@ -10,32 +10,6 @@
 
 	<script type="text/javascript" src="js/main.js"></script>
 	<script type="text/javascript" src="js/flip.js"></script>
-	<script type="text/javascript">
-		// Turn signals
-		var turnSignalAudio = new Audio("audio/turn-signal.mp3");
-		function playTurnSignalAudio() {
-			turnSignalAudio.currentTime = 0;
-			turnSignalAudio.loop = true;
-			turnSignalAudio.play();
-		}
-		function stopTurnSignalAudio() {
-			turnSignalAudio.pause();
-		}
-
-		// Lock
-		var lockAudio = new Audio("audio/lock.mp3");
-		function playLockAudio() {
-			lockAudio.currentTime = 0;
-			lockAudio.play();
-		}
-
-		// Horn
-		function playHornAudio() {
-			var hornAudio = new Audio("audio/" + currentHorn + ".mp3");
-			hornAudio.currentTime = 0;
-			hornAudio.play();
-		}
-	</script>
 </head>
 
 <body>
@@ -77,7 +51,6 @@
 			<div class="wheel-frame" id="wheel300" style="background-image:url('img/png/wheel/wheel300.png')"></div>
 			<div class="wheel-frame" id="wheel320" style="background-image:url('img/png/wheel/wheel320.png')"></div>
 			<div class="wheel-frame" id="wheel340" style="background-image:url('img/png/wheel/wheel340.png')"></div>
-			<div id="horn" onclick="hornClick(event)"></div>
 		</div>
 
 		<!-- Button handles -->

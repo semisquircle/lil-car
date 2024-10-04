@@ -1,20 +1,22 @@
 # Lil' Car
 A mock car widget for Dashboard on old macOS versions.
-This is a general repository for the widget featured in my [YouTube video](https://duckduckgo.com).
+This is a general repository for the widget featured in my [YouTube video](#).
 
 ## Versions
 To maximize compatibility, two versions are available:
 - *Standard Edition*
 	- No sound effects
-	- HTML 4.01, ECMAScript 3
+	- ECMAScript 3
 	- Optimized for Mac OS X 10.4 Tiger – 10.6 Snow Leopard
 - *Deluxe Edition*
-	- Embedded sound effects
-	- HTML 5, ECMAScript 5
+	- Yes sound effects
+	- ECMAScript 5
 	- Optimized for Mac OS X 10.7 Lion – macOS 10.14 Mojave
 
+Icons from Noun Project.
+
 ## Installation
-Download a compiled version on [Semipedia](https://semiopteryx.github.io/semipedia/chapters/semiware) or the [releases page](https://duckduckgo.com). Extract, double-click on the .wdgt file, and drag the widget to your desired location on the Dashboard. This will be stored in ~/Library/Widgets.
+Download a compiled version on [Semipedia](https://semiopteryx.github.io/semipedia/chapters/semiware) or the [releases page](#). Extract, double-click on the .wdgt file, and drag the widget to your desired location on the Dashboard. This will be stored in ~/Library/Widgets.
 
 ## Virtual Machine Instructions
 If you're interested in widgets but you lack access to hardware running an old enough Mac version, I recommend VMWare Fusion or UTM for emulation on a host Mac. Apple's [Developer Support](https://support.apple.com/en-us/102662) page provides disk images for 10.7 – 10.12, and a Tiger ISO can be found pretty easily elsewhere.
@@ -28,4 +30,4 @@ Shared directories/guest additions is generally unsupported for Mac versions <10
 5. Navigate to the VM's main hard disk and copy the widget wherever you like!
 
 ## Note
-Keep in mind the Standard edition was written to be completely backwards compatibile with the Safari 2.0 WebKit engine from 2005. That means no native audio support, no CSS3, and bare-bones JS helper methods. For future developers, I would recommend starting with a program like Dashcode on OS X 10.7.
+Keep in mind the Standard edition was written to be completely backwards compatible with the Safari 2.0 WebKit engine from 2005. That means no native audio support, no CSS3, and bare-bones JS helper methods. For future developers, I would recommend starting with a program like Dashcode on OS X 10.7.
