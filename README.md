@@ -1,6 +1,6 @@
 # Lil' Car
 A mock car widget for Dashboard on old macOS versions.\
-This is a general repository for the widget featured in my [YouTube video](#).\
+This is a general repository for the widget featured in my [YouTube video](https://www.youtube.com/watch?v=7AI3I5GoM8A).\
 Icons from Noun Project.
 
 ## Versions
@@ -15,7 +15,7 @@ To maximize compatibility, two versions are available:
 	- Optimized for Mac OS X 10.7 Lion – macOS 10.14 Mojave
 
 ## Installation
-Download a compiled version on [Semipedia](https://semiopteryx.github.io/semipedia/chapters/semiware) or the [releases page](https://github.com/semiopteryx/lil-car/releases). Extract, double-click on the .wdgt file, and drag the widget to your desired location on the Dashboard. This will be stored in ~/Library/Widgets.
+Download a compiled version on [Semipedia](https://semipedia.cool/chapters/semiware#lil-car) or the [releases page](https://github.com/semisquircle/lil-car/releases). Extract, double-click on the .wdgt file, and drag the widget to your desired location on the Dashboard. This will be stored in ~/Library/Widgets.
 
 ## Virtual Machine Instructions
 If you're interested in widgets but you lack access to hardware running an old enough Mac version, I recommend VMWare Fusion or UTM for emulation on a host Mac. Apple's [Developer Support](https://support.apple.com/en-us/102662) page provides disk images for 10.7 – 10.12, and a Tiger ISO can be found pretty easily elsewhere.
